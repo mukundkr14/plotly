@@ -1,0 +1,81 @@
+<html>
+  <head>
+	<!-- Plotly.js -->
+	 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  
+  <body>
+	<div id="myDiv" style="width: 480px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+	<script>
+		function makeplot() {
+			// Plotly.d3.csv("https://raw.githubusercontent.com/plotly/datasets/master/2014_apple_stock.csv", function(data){ processData(data) } );
+			Plotly.d3.csv("https://raw.githubusercontent.com/mukundkr14/plotly/master/plotdata.csv", function(data){ processData(data) } );
+		
+		};
+
+		var x1 = [], y1 = [], standard_deviation1 = [];
+			var x2 = [], y2 = [], standard_deviation2 = [];
+			var x3 = [], y3 = [], standard_deviation3 = [];
+			var x4 = [], y4 = [], standard_deviation4 = [];
+			var x5 = [], y5 = [], standard_deviation5 = [];
+		
+			
+		function processData(allRows) {
+		
+			console.log(allRows);
+			var x = [], y = [], standard_deviation = [], y1 = [], standard_deviation1 = [], y2 = [], standard_deviation2 = []
+			y3 = [], standard_deviation3 = [], y4 = [], standard_deviation4 = [], y5 = [], standard_deviation5 = [];
+
+
+			
+			for (var i=0; i<allRows.length; i++) {
+				row = allRows[i];
+				x.push( row['Time (s)'] );
+				y.push( row['Position (in)'] );
+				y1.push( row['Position Motor Current'] );
+				y2.push( row['PM Current PID Output'] );
+				y3.push( row['MM Current PID Output'] );
+				y4.push( row['Mix Motor Current'] );
+				y5.push( row['Desired counts'] );
+			}
+			console.log( 'X',x, 'Y',y, 'SD',standard_deviation );
+			//   makePlotly( x, y, standard_deviation );
+			makePlotly( x, y,y1,y2,y3,y4,y5, standard_deviation, standard_deviation1, standard_deviation2, standard_deviation3, standard_deviation4, standard_deviation5 )
+		}
+		
+		function makePlotly( x, y,y1,y2,y3,y4,y5, standard_deviation, standard_deviation1, standard_deviation2, standard_deviation3, standard_deviation4, standard_deviation5 ){
+			var plotDiv = document.getElementById("plot");
+			var traces = [{
+				x: x, 
+				y: y
+			}];
+			var traces1 = [{
+				x: x, 
+				y: y1
+			}];
+			var traces2 = [{
+				x: x, 
+				y: y2
+			}];
+			var traces3 = [{
+				x: x, 
+				y: y3
+			}];
+			var traces4 = [{
+				x: x, 
+				y: y4
+			}];
+			var traces5 = [{
+				x: x, 
+				y: y5
+			}];
+
+			var AllData =[traces[0], traces1[0], traces2[0], traces3[0], traces4[0], traces5[0]];
+		
+			Plotly.newPlot('myDiv',AllData, 
+				{title: 'Blender Data', responsive:'true'});
+		};
+			makeplot();
+	</script>
+  </body>
+</html>
